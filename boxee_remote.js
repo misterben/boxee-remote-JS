@@ -254,4 +254,5 @@ BoxeeRemote.prototype.listBookmarks = function(callback) {
 		callback(dbdata);
 	});
 }
-		
+
+var store = Lawnchair(function() {});
