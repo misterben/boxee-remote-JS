@@ -1,7 +1,7 @@
 <html>
 <head>
-    <script type="text/javascript" src="CORE_engine.xhr.js"></script>
-	<script type="text/javascript" src="CORE_store.js"></script>
+	<script type="text/javascript" src="lawnchair/src/Lawnchair.js"></script>
+	<script type="text/javascript" src="lawnchair/src/adapters/dom.js"></script>
     <script type="text/javascript" src="boxee_remote.js"></script>
 
     <script type="text/javascript">
@@ -27,24 +27,26 @@
 	<a href="javascript:myBoxee.storeBookmark(true)">Store current position as bookmark</a><br />
 
 	<a href="javascript:myBoxee.listBookmarks(updateBookmarks);">Update Bookmark List</a>
+	<div id='bookmarks'></div>	
 	<script>
 	function updateBookmarks(data) {
 		output = "<ul>";
-		for (var i=0; i < data.length; i++) {
-			output += "<li>";
-			if (parseInt(data[i]['position']) == 0) {
-				output += "<a href='javascript:myBoxee.loadBookmark(\""+data[i]['filename']+"\", \""+data[i]['type']+"\");'>"+data[i]['filename']+"</a> || <a href='javascript:myBoxee.deleteBookmark(\""+data[i]['filename']+"\");'>X</a>";
-			} else {
-				output += "<a href='javascript:myBoxee.loadBookmark(\""+data[i]['filename']+"\", \""+data[i]['type']+"\", \""+data[i]['position']+"\");'>"+data[i]['filename']+" ["+data[i]['position']+"%]</a> || <a href='javascript:myBoxee.deleteBookmark(\""+data[i]['filename']+"\");'>X</a>";
-			}
-			output += "</li>";
+        if(data) {
+    		for (var i=0; i < data.length; i++) {
+	    		output += "<li>";
+		    	if (parseInt(data[i]['position']) == 0) {
+			    	output += "<a href='javascript:myBoxee.loadBookmark(\""+data[i]['filename']+"\", \""+data[i]['type']+"\");'>"+data[i]['filename']+"</a> || <a href='javascript:myBoxee.deleteBookmark(\""+data[i]['filename']+"\");'>X</a>";
+			    } else {
+				    output += "<a href='javascript:myBoxee.loadBookmark(\""+data[i]['filename']+"\", \""+data[i]['type']+"\", \""+data[i]['position']+"\");'>"+data[i]['filename']+" ["+data[i]['position']+"%]</a> || <a href='javascript:myBoxee.deleteBookmark(\""+data[i]['filename']+"\");'>X</a>";
+			    }
+			    output += "</li>";
+            }
 		}
 		output += "</ul>";
 		document.getElementById('bookmarks').innerHTML = output;
 	}
 	myBoxee.listBookmarks(updateBookmarks);
 	</script>
-	<div id='bookmarks'></div>	
 
 	<hr />
 	<h3>Tests specific to my home box</h3>
